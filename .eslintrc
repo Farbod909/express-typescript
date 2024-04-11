@@ -8,10 +8,6 @@
       "eslint:recommended",
       "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended",
-      "airbnb-base",
       "prettier"
-    ],
-    "rules": {
-      "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
-    }
+    ]
 }

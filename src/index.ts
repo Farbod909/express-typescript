@@ -1,15 +1,15 @@
-import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
 
-dotenv.config();
+import config from './common/config';
 
-const app: Express = express();
-const port = process.env.PORT || 3000;
+const app = express();
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
-});
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
+app.listen(config.PORT, () => {
+  console.log(`Listening on port ${config.PORT}`);
 });
