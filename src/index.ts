@@ -3,7 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 import config from './common/config';
-import movementRouter from './routes/movement';
+import movementRouter from './routes/movement.route';
 
 const app = express();
 
