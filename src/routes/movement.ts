@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import * as movementController from '../controllers/movementController';
+import * as movementController from '../controllers/movement.controller';
 
 const router: Router = express.Router();
 
