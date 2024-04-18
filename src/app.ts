@@ -6,7 +6,7 @@ import 'express-async-errors';
 
 import config from './common/config';
 import movementsRouter from './routes/movements.route';
-import { newUser, getUserById } from './models/user.model';
+import usersRouter from './routes/users.route';
 import { errorHandler } from './middleware/errors';
 
 const app = express();
@@ -17,34 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/movements', movementsRouter);
-
-app.get(
-  '/',
-  asyncHandler(async (req, res) => {
-    res.end('Hello world.');
-  }),
-);
-
-app.post(
-  '/newUser',
-  asyncHandler(async (req, res) => {
-    await newUser(
-      req.body.email,
-      req.body.password,
-      req.body.firstName,
-      req.body.lastName,
-    );
-    res.send('done');
-  }),
-);
-
-app.get(
-  '/users/:id',
-  asyncHandler(async (req, res) => {
-    const user = await getUserById(req.params.id);
-    res.send(user);
-  }),
-);
+app.use('/users', usersRouter);
 
 app.use(errorHandler);
 

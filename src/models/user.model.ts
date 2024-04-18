@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { Pool } from 'pg';
 
 import config from '../common/config';
-import { BadRequestError } from '../errors/HttpErrors';
+import { BadRequestError, InternalError } from '../errors/HttpErrors';
 
 export default interface User {
   id: string;
@@ -34,9 +34,14 @@ export async function newUser(
     application_name: '$ movement-service',
   });
 
-  await pool.query(insertStatement);
-
+  const res = await pool.query(insertStatement);
   await pool.end();
+
+  if (res.rowCount == null || res.rowCount === 0) {
+    throw new InternalError('User not created.');
+  }
+  const user: User = res.rows[0];
+  return user;
 }
 
 export async function getUserById(id: string): Promise<User> {
@@ -57,8 +62,10 @@ export async function getUserById(id: string): Promise<User> {
   });
 
   const res = await pool.query<User>(selectStatement);
+  await pool.end();
+
   if (res.rowCount == null || res.rowCount === 0) {
-    throw new BadRequestError('Could not find user.');
+    throw new BadRequestError(`No user found with id ${id}.`);
   }
   const user: User = res.rows[0];
   return user;
