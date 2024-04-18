@@ -2,10 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import asyncHandler from 'express-async-handler';
+import 'express-async-errors';
 
 import config from './common/config';
 import movementRouter from './routes/movement.route';
-import { newUser, getUserById } from './db/cockroach.db';
+import { newUser, getUserById } from './models/user.model';
+import { errorHandler } from './middleware/errors';
 
 const app = express();
 
@@ -39,11 +41,13 @@ app.post(
 app.get(
   '/users/:id',
   asyncHandler(async (req, res) => {
-    console.log('id: ' + req.params.id);
     const user = await getUserById(req.params.id);
     res.send(user);
   }),
 );
+
+app.use(errorHandler);
+
 app.listen(config.PORT, () => {
   console.log(`Listening on port ${config.PORT}`);
 });
