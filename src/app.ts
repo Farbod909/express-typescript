@@ -5,7 +5,7 @@ import asyncHandler from 'express-async-handler';
 import 'express-async-errors';
 
 import config from './common/config';
-import movementRouter from './routes/movement.route';
+import movementsRouter from './routes/movements.route';
 import { newUser, getUserById } from './models/user.model';
 import { errorHandler } from './middleware/errors';
 
@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/movements', movementRouter);
+app.use('/movements', movementsRouter);
 
 app.get(
   '/',
