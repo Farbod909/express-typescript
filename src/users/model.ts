@@ -47,6 +47,22 @@ export async function newUser(
   return user;
 }
 
+export async function getAllUsers(): Promise<User[]> {
+  const selectStatement = `SELECT * FROM users;`;
+
+  const connectionString = config.DATABASE_URL;
+  const pool = new Pool({
+    connectionString,
+    application_name: '$ movement-service',
+  });
+
+  const res = await pool.query<User>(selectStatement);
+  await pool.end();
+
+  const users: User[] = res.rows;
+  return users;
+}
+
 export async function getUserById(id: string): Promise<User> {
   if (!id) {
     throw new BadRequestError('Id must be provided.');

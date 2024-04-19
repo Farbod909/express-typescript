@@ -1,5 +1,11 @@
 import User from './model';
 
+export interface UserListRequest {}
+
+export interface UserListResponse {
+  users: User[];
+}
+
 export interface UserDetailRequest {
   userId: string;
 }
