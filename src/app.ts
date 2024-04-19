@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import asyncHandler from 'express-async-handler';
-import 'express-async-errors';
 
 import config from './common/config';
 import movementsRouter from './routes/movements.route';
