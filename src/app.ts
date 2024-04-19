@@ -3,9 +3,9 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 import config from './common/config';
-import movementsRouter from './routes/movements.route';
-import usersRouter from './routes/users.route';
-import { errorHandler } from './middleware/errors';
+import movementsRouter from './movements/routes';
+import usersRouter from './users/routes';
+import { errorHandler } from './common/middleware/errorHandler';
 
 const app = express();
 

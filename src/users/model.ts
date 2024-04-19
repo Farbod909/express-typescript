@@ -3,7 +3,10 @@ import bcrypt from 'bcrypt';
 import { Pool } from 'pg';
 
 import config from '../common/config';
-import { BadRequestError, InternalError } from '../errors/HttpErrors';
+import {
+  BadRequestError,
+  InternalError,
+} from '../common/error-types/HttpErrors';
 
 export default interface User {
   id: string;
