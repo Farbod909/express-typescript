@@ -1,17 +1,16 @@
 import BaseError from './BaseError';
 
-export class BadRequestError extends BaseError {
-  private static readonly _statusCode = 400;
+abstract class BaseHttpError extends BaseError {
   private readonly _code: number;
   private readonly _message: string;
-  constructor(message: string) {
-    super(message || 'Bad request');
+  constructor(code: number, message: string) {
+    super(message);
 
-    this._code = BadRequestError._statusCode;
+    this._code = code;
     this._message = message;
 
     // Only because we are extending a built in class
-    Object.setPrototypeOf(this, BadRequestError.prototype);
+    Object.setPrototypeOf(this, BaseHttpError.prototype);
   }
 
   get statusCode() {
@@ -23,25 +22,16 @@ export class BadRequestError extends BaseError {
   }
 }
 
-export class InternalError extends BaseError {
-  private static readonly _statusCode = 500;
-  private readonly _code: number;
-  private readonly _message: string;
+export class BadRequestError extends BaseHttpError {
+  private static readonly _statusCode = 400;
   constructor(message: string) {
-    super(message || 'Bad request');
-
-    this._code = InternalError._statusCode;
-    this._message = message;
-
-    // Only because we are extending a built in class
-    Object.setPrototypeOf(this, BadRequestError.prototype);
+    super(BadRequestError._statusCode, message || 'Bad request');
   }
+}
 
-  get statusCode() {
-    return this._code;
-  }
-
-  get message() {
-    return this._message;
+export class InternalError extends BaseHttpError {
+  private static readonly _statusCode = 500;
+  constructor(message: string) {
+    super(InternalError._statusCode, message || 'Server error');
   }
 }
