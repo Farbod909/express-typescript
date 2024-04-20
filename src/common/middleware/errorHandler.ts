@@ -11,7 +11,7 @@ export const errorHandler = (
   if (err instanceof BaseError) {
     const { statusCode, message } = err;
 
-    return res.status(statusCode).send({ message: message });
+    return res.status(statusCode).send({ error_message: message });
   }
 
   // Unhandled errors
